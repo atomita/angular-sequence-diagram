@@ -1,0 +1,23 @@
+{
+  "name": "angular-sequence‎",
+  "version": "0.0.1",
+  "authors": [
+    "@ <sleeping.cait.sith+gh@gmail.com>"
+  ],
+  "main": "angular-sequence-diagram.min.js",
+  "license": "MIT",
+  "homepage": "https://atomita.github.io/",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "js-sequence-diagrams": "~1.0.4",
+    "angular": "~1.3.6",
+    "raphael": "~2.1.2",
+    "underscore": "~1.7.0"
+  }
+}
