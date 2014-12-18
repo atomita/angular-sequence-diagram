@@ -1,5 +1,5 @@
 (function() {
-  var Diagram, angular, baseoption, directive_link, draw, language_directive_link, render, seq;
+  var $sce, Diagram, angular, baseoption, directive_link, draw, language_directive_link, render, seq;
 
   if (typeof require === "function") {
     require("angular");
@@ -45,7 +45,7 @@
     }
     $elm = angular.element(output_element);
     svg = render(sequence_code, option);
-    return $elm.html(svg);
+    $elm.html(svg);
   };
 
   directive_link = function(scope, element, attrs) {
@@ -53,6 +53,8 @@
   };
 
   language_directive_link = function() {};
+
+  $sce = null;
 
   seq.provider("sequenceDiagram", function() {
     this.option = function(opt) {
@@ -77,17 +79,34 @@
       language_directive_link = directive_link;
       return this;
     };
-    this.$get = function() {
-      return {
-        "render": render,
-        "draw": draw
-      };
+    this.$get = [
+      "$sce", function($_sce) {
+        $sce = $_sce;
+        return {
+          "render": render,
+          "draw": draw
+        };
+      }
+    ];
+  });
+
+  seq.directive("sequenceDiagram", function() {
+    return {
+      restrict: "E",
+      transclude: true,
+      replace: true,
+      template: "<div ng-bind-html=\"diagram\" class=\"at-sequence-diagram\"></div>",
+      link: function(scope, element, attrs, requires, transclude) {
+        var diagram;
+        diagram = render(attrs.sourceCode || transclude().text(), element, attrs);
+        return scope.diagram = $sce.trustAsHtml(diagram);
+      }
     };
   });
 
   seq.directive("sequenceDiagram", function() {
     return {
-      restrict: "EA",
+      restrict: "A",
       template: "",
       link: directive_link
     };

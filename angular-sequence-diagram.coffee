@@ -34,6 +34,7 @@ draw = (sequence_code, output_element, option = {})->
 	$elm = angular.element output_element
 	svg = render sequence_code, option
 	$elm.html svg
+	return
 
 
 directive_link = (scope, element, attrs)->
@@ -42,6 +43,7 @@ directive_link = (scope, element, attrs)->
 
 language_directive_link = -> return
 
+$sce = null
 
 seq.provider "sequenceDiagram", ()->
 	@option = (opt)->
@@ -60,16 +62,30 @@ seq.provider "sequenceDiagram", ()->
 		language_directive_link = directive_link
 		@
 
-	@$get = ()->
-		"render": render
-		"draw": draw
+	@$get = ["$sce", ($_sce)->
+		$sce = $_sce
+		{
+			"render": render
+			"draw": draw
+		}
+	]
 
 	return
 
 
 seq.directive "sequenceDiagram", ->
 	{
-		restrict: "EA"
+		restrict: "E"
+		transclude: true
+		replace: true
+		template: "<div ng-bind-html=\"diagram\" class=\"at-sequence-diagram\"></div>"
+		link: (scope, element, attrs, requires, transclude)->
+			diagram = render attrs.sourceCode or transclude().text(), element, attrs
+			scope.diagram = $sce.trustAsHtml diagram
+	}
+seq.directive "sequenceDiagram", ->
+	{
+		restrict: "A"
 		template: ""
 		link: directive_link
 	}
