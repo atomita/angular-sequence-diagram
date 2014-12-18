@@ -93,6 +93,7 @@
   seq.directive("sequenceDiagram", function() {
     return {
       restrict: "E",
+      scope: true,
       transclude: true,
       replace: true,
       template: "<div ng-bind-html=\"diagram\" class=\"at-sequence-diagram\"></div>",
