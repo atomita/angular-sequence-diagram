@@ -81,7 +81,7 @@ seq.directive "sequenceDiagram", ->
 		replace: true
 		template: "<div ng-bind-html=\"diagram\" class=\"at-sequence-diagram\"></div>"
 		link: (scope, element, attrs, requires, transclude)->
-			diagram = render attrs.sourceCode or transclude().text(), element, attrs
+			diagram = render attrs.sourceCode or transclude().text(), attrs
 			scope.diagram = $sce.trustAsHtml diagram
 	}
 seq.directive "sequenceDiagram", ->

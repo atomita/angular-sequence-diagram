@@ -99,7 +99,7 @@
       template: "<div ng-bind-html=\"diagram\" class=\"at-sequence-diagram\"></div>",
       link: function(scope, element, attrs, requires, transclude) {
         var diagram;
-        diagram = render(attrs.sourceCode || transclude().text(), element, attrs);
+        diagram = render(attrs.sourceCode || transclude().text(), attrs);
         return scope.diagram = $sce.trustAsHtml(diagram);
       }
     };
