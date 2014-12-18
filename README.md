@@ -54,9 +54,8 @@ app.controller("ctrl", ["$scope", "sequenceDiagram", "$sce", function($scope, se
 			A->B: A
 		</div>
 
-		<!-- use the directive using the attribute "source-code". -->
-		<div ng-init="code='a->b: does something'">
-			<sequence-diagram source-code="{{code}}"></sequence-diagram>
+		<!-- using directive by attribute with value. -->
+		<div ng-init="code='a->b: does something'" sequence-diagram="{{code}}">
 		</div>
 
 		<!-- using directive by class "language-sequence". -->

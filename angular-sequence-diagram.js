@@ -49,7 +49,7 @@
   };
 
   directive_link = function(scope, element, attrs) {
-    return draw(attrs.sourceCode || element.text(), element, attrs);
+    return draw(attrs.sequenceDiagram || element.text(), element, attrs);
   };
 
   language_directive_link = function() {};
@@ -99,7 +99,7 @@
       template: "<div ng-bind-html=\"diagram\" class=\"at-sequence-diagram\"></div>",
       link: function(scope, element, attrs, requires, transclude) {
         var diagram;
-        diagram = render(attrs.sourceCode || transclude().text(), attrs);
+        diagram = render(attrs.sequenceDiagram || transclude().text(), attrs);
         return scope.diagram = $sce.trustAsHtml(diagram);
       }
     };

@@ -38,7 +38,7 @@ draw = (sequence_code, output_element, option = {})->
 
 
 directive_link = (scope, element, attrs)->
-	draw attrs.sourceCode or element.text(), element, attrs
+	draw attrs.sequenceDiagram or element.text(), element, attrs
 
 
 language_directive_link = -> return
@@ -81,7 +81,7 @@ seq.directive "sequenceDiagram", ->
 		replace: true
 		template: "<div ng-bind-html=\"diagram\" class=\"at-sequence-diagram\"></div>"
 		link: (scope, element, attrs, requires, transclude)->
-			diagram = render attrs.sourceCode or transclude().text(), attrs
+			diagram = render attrs.sequenceDiagram or transclude().text(), attrs
 			scope.diagram = $sce.trustAsHtml diagram
 	}
 seq.directive "sequenceDiagram", ->
