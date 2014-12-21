@@ -1,8 +1,8 @@
 {
-  "name": "angular-sequence",
+  "name": "angular-sequence-diagram",
   "version": "1.0.0",
-  "description": "angular-sequence ================",
-  "main": "angular-sequence.js",
+  "description": "angular-sequence-diagram ================",
+  "main": "angular-sequence-diagram.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "gulp": "./node_modules/gulp/bin/gulp.js"
@@ -14,9 +14,9 @@
   "author": "atomita",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/atomita/angular-sequence/issues"
+    "url": "https://github.com/atomita/angular-sequence-diagram/issues"
   },
-  "homepage": "https://github.com/atomita/angular-sequence",
+  "homepage": "https://github.com/atomita/angular-sequence-diagram",
   "devDependencies": {
     "coffee-script": "^1.8.0",
     "gulp": "^3.8.10",
