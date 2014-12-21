@@ -1,6 +1,5 @@
 {
   "name": "angular-sequence-diagram",
-  "version": "1.0.0",
   "description": "angular-sequence-diagram ================",
   "main": "angular-sequence-diagram.min.js",
   "scripts": {
