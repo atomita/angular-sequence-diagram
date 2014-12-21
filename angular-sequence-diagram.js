@@ -1,5 +1,5 @@
 (function() {
-  var $sce, Diagram, angular, baseoption, directive_link, draw, language_directive_link, render, seq;
+  var Diagram, angular, baseoption, directive_link, draw, language_directive_link, render, seq;
 
   if (typeof require === "function") {
     require("angular");
@@ -54,8 +54,6 @@
 
   language_directive_link = function() {};
 
-  $sce = null;
-
   seq.provider("sequenceDiagram", function() {
     this.option = function(opt) {
       baseoption = angular.extend(baseoption, opt);
@@ -79,15 +77,12 @@
       language_directive_link = directive_link;
       return this;
     };
-    this.$get = [
-      "$sce", function($_sce) {
-        $sce = $_sce;
-        return {
-          "render": render,
-          "draw": draw
-        };
-      }
-    ];
+    this.$get = function($_sce) {
+      return {
+        "render": render,
+        "draw": draw
+      };
+    };
   });
 
   seq.directive("sequenceDiagram", function() {
@@ -97,11 +92,13 @@
       transclude: true,
       replace: true,
       template: "<div ng-bind-html=\"diagram\" class=\"at-sequence-diagram\"></div>",
-      link: function(scope, element, attrs, requires, transclude) {
-        var diagram;
-        diagram = render(attrs.sequenceDiagram || transclude().text(), attrs);
-        return scope.diagram = $sce.trustAsHtml(diagram);
-      }
+      controller: [
+        "$scope", "$element", "$attrs", "$transclude", "$sce", function($scope, $element, $attrs, $transclude, $sce) {
+          var diagram;
+          diagram = render($attrs.sequenceDiagram || $transclude().text(), $attrs);
+          return scope.diagram = $sce.trustAsHtml(diagram);
+        }
+      ]
     };
   });
 

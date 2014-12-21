@@ -43,7 +43,6 @@ directive_link = (scope, element, attrs)->
 
 language_directive_link = -> return
 
-$sce = null
 
 seq.provider "sequenceDiagram", ()->
 	@option = (opt)->
@@ -62,13 +61,9 @@ seq.provider "sequenceDiagram", ()->
 		language_directive_link = directive_link
 		@
 
-	@$get = ["$sce", ($_sce)->
-		$sce = $_sce
-		{
-			"render": render
-			"draw": draw
-		}
-	]
+	@$get = ($_sce)->
+		"render": render
+		"draw": draw
 
 	return
 
@@ -80,9 +75,16 @@ seq.directive "sequenceDiagram", ->
 		transclude: true
 		replace: true
 		template: "<div ng-bind-html=\"diagram\" class=\"at-sequence-diagram\"></div>"
-		link: (scope, element, attrs, requires, transclude)->
-			diagram = render attrs.sequenceDiagram or transclude().text(), attrs
-			scope.diagram = $sce.trustAsHtml diagram
+		controller: [
+			"$scope"
+			"$element"
+			"$attrs"
+			"$transclude"
+			"$sce"
+			($scope, $element, $attrs, $transclude, $sce)->
+				diagram = render $attrs.sequenceDiagram or $transclude().text(), $attrs
+				scope.diagram = $sce.trustAsHtml diagram
+		]
 	}
 seq.directive "sequenceDiagram", ->
 	{
