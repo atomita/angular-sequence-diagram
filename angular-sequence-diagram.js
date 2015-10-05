@@ -96,7 +96,7 @@
         "$scope", "$element", "$attrs", "$transclude", "$sce", function($scope, $element, $attrs, $transclude, $sce) {
           var diagram;
           diagram = render($attrs.sequenceDiagram || $transclude().text(), $attrs);
-          return scope.diagram = $sce.trustAsHtml(diagram);
+          return $scope.diagram = $sce.trustAsHtml(diagram);
         }
       ]
     };
