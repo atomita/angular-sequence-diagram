@@ -83,7 +83,7 @@ seq.directive "sequenceDiagram", ->
 			"$sce"
 			($scope, $element, $attrs, $transclude, $sce)->
 				diagram = render $attrs.sequenceDiagram or $transclude().text(), $attrs
-				scope.diagram = $sce.trustAsHtml diagram
+				$scope.diagram = $sce.trustAsHtml diagram
 		]
 	}
 seq.directive "sequenceDiagram", ->
